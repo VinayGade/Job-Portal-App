@@ -16,25 +16,18 @@ import java.io.IOException;
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
-
-        // AuthenticationSuccessHandler.super.onAuthenticationSuccess(request, response, chain, authentication);
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String userName = userDetails.getUsername();
-        System.out.println("The username "+userName+" is logged in.");
+        System.out.println("The username " + userName + " is logged in.");
         boolean hasJobSeekerRole = authentication.getAuthorities().stream().anyMatch(
                 r -> r.getAuthority().equals("Job Seeker"));
-        boolean hasRecruiterRole =authentication.getAuthorities().stream().anyMatch(
+        boolean hasRecruiterRole = authentication.getAuthorities().stream().anyMatch(
                 r -> r.getAuthority().equals("Recruiter"));
 
-        if(hasRecruiterRole || hasJobSeekerRole){
+        if (hasRecruiterRole || hasJobSeekerRole) {
             response.sendRedirect("/dashboard/");
         }
-    }
-
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
     }
 }
