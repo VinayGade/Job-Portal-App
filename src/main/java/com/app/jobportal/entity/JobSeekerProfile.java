@@ -18,7 +18,7 @@ public class JobSeekerProfile {
     private Integer userAccountId;
 
     @OneToOne
-    @JoinColumn(name="user_account_id")
+    @JoinColumn(name = "user_account_id")
     @MapsId
     private Users userId;
 
